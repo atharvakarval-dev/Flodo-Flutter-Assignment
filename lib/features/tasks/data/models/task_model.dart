@@ -7,9 +7,11 @@ class TaskModel extends TaskEntity {
     required super.description,
     required super.status,
     required super.priority,
+    super.group = TaskGroup.work,
     super.dueDate,
     required super.createdAt,
     required super.updatedAt,
+    super.blockedById,
   });
 
   factory TaskModel.fromJson(Map<String, dynamic> json) {
@@ -19,17 +21,20 @@ class TaskModel extends TaskEntity {
       description: json['description'] as String? ?? '',
       status: TaskStatus.values.firstWhere(
         (e) => e.name == json['status'],
-        orElse: () => TaskStatus.pending,
+        orElse: () => TaskStatus.todo,
       ),
       priority: TaskPriority.values.firstWhere(
         (e) => e.name == json['priority'],
         orElse: () => TaskPriority.medium,
       ),
-      dueDate: json['dueDate'] != null
-          ? DateTime.parse(json['dueDate'] as String)
-          : null,
+      group: TaskGroup.values.firstWhere(
+        (e) => e.name == json['group'],
+        orElse: () => TaskGroup.work,
+      ),
+      dueDate: json['dueDate'] != null ? DateTime.parse(json['dueDate'] as String) : null,
       createdAt: DateTime.parse(json['createdAt'] as String),
       updatedAt: DateTime.parse(json['updatedAt'] as String),
+      blockedById: json['blockedById'] as String?,
     );
   }
 
@@ -40,9 +45,11 @@ class TaskModel extends TaskEntity {
       'description': description,
       'status': status.name,
       'priority': priority.name,
+      'group': group.name,
       'dueDate': dueDate?.toIso8601String(),
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),
+      'blockedById': blockedById,
     };
   }
 
@@ -53,9 +60,11 @@ class TaskModel extends TaskEntity {
       description: entity.description,
       status: entity.status,
       priority: entity.priority,
+      group: entity.group,
       dueDate: entity.dueDate,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
+      blockedById: entity.blockedById,
     );
   }
 }

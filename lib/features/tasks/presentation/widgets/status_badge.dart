@@ -16,40 +16,34 @@ class StatusBadge extends StatelessWidget {
 
   Color get _color {
     switch (status) {
-      case TaskStatus.pending:
+      case TaskStatus.todo:
         return AppColors.statusTodo;
       case TaskStatus.inProgress:
         return AppColors.statusInProgress;
       case TaskStatus.done:
         return AppColors.statusDone;
-      case TaskStatus.blocked:
-        return AppColors.statusBlocked;
     }
   }
 
   Color get _bgColor {
     switch (status) {
-      case TaskStatus.pending:
+      case TaskStatus.todo:
         return AppColors.statusTodoBackground;
       case TaskStatus.inProgress:
         return AppColors.statusInProgressBackground;
       case TaskStatus.done:
         return AppColors.statusDoneBackground;
-      case TaskStatus.blocked:
-        return AppColors.statusBlockedBackground;
     }
   }
 
   IconData get _icon {
     switch (status) {
-      case TaskStatus.pending:
+      case TaskStatus.todo:
         return Icons.radio_button_unchecked;
       case TaskStatus.inProgress:
         return Icons.timelapse_rounded;
       case TaskStatus.done:
         return Icons.check_circle_rounded;
-      case TaskStatus.blocked:
-        return Icons.block_rounded;
     }
   }
 

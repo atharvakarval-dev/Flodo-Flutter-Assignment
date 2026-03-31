@@ -85,11 +85,29 @@ final tasksNotifierProvider =
 
 final searchQueryProvider = StateProvider<String>((ref) => '');
 
+final debouncedSearchQueryProvider = StateProvider<String>((ref) => '');
+
 final statusFilterProvider = StateProvider<TaskStatus?>((ref) => null);
+
+// Set of task IDs that are actively blocking another task (blocker is not done)
+final blockedTaskIdsProvider = Provider<Set<String>>((ref) {
+  final tasksAsync = ref.watch(tasksNotifierProvider);
+  return tasksAsync.when(
+    data: (tasks) {
+      final doneIds = tasks.where((t) => t.status == TaskStatus.done).map((t) => t.id).toSet();
+      return tasks
+          .where((t) => t.blockedById != null && !doneIds.contains(t.blockedById))
+          .map((t) => t.id)
+          .toSet();
+    },
+    loading: () => {},
+    error: (_, __) => {},
+  );
+});
 
 final filteredTasksProvider = Provider<List<TaskEntity>>((ref) {
   final tasksAsync = ref.watch(tasksNotifierProvider);
-  final query = ref.watch(searchQueryProvider).toLowerCase().trim();
+  final query = ref.watch(debouncedSearchQueryProvider).toLowerCase().trim();
   final statusFilter = ref.watch(statusFilterProvider);
 
   return tasksAsync.when(
@@ -100,9 +118,7 @@ final filteredTasksProvider = Provider<List<TaskEntity>>((ref) {
       }
       if (query.isNotEmpty) {
         filtered = filtered
-            .where((t) =>
-                t.title.toLowerCase().contains(query) ||
-                t.description.toLowerCase().contains(query))
+            .where((t) => t.title.toLowerCase().contains(query))
             .toList();
       }
       return filtered;

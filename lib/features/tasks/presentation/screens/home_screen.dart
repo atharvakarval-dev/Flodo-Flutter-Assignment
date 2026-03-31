@@ -67,42 +67,28 @@ class HomeScreen extends ConsumerWidget {
     return count.toString();
   }
 
+  String get _greeting {
+    final hour = DateTime.now().hour;
+    if (hour < 12) return 'Good Morning ☀️';
+    if (hour < 17) return 'Good Afternoon 🌤️';
+    if (hour < 21) return 'Good Evening 🌆';
+    return 'Good Night 🌙';
+  }
+
   Widget _buildHeader() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const CircleAvatar(
-                radius: 24,
-                backgroundColor: Color(0xFFE7F4FF),
-                backgroundImage: NetworkImage('https://i.pravatar.cc/100?img=5'), // placeholder
-              ),
-              const SizedBox(width: 12),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'Hello!',
-                    style: TextStyle(fontSize: 14, color: AppColors.textPrimary),
-                  ),
-                  Text(
-                    'Livia Vaccaro',
-                    style: TextStyle(
-                      fontSize: 19,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
-                    ),
-                  ),
-                ],
+              Text(
+                _greeting,
+                style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
               ),
             ],
-          ),
-          IconButton(
-            icon: const Icon(Icons.notifications_rounded, color: AppColors.textPrimary),
-            onPressed: () {},
           ),
         ],
       ),
@@ -343,11 +329,10 @@ class HomeScreen extends ConsumerWidget {
         Color statusTextColor;
         String statusLabel;
         switch (task.status) {
-          case TaskStatus.pending:
-          case TaskStatus.blocked:
+          case TaskStatus.todo:
             statusBgColor = AppColors.statusTodoBg;
             statusTextColor = AppColors.statusTodoText;
-            statusLabel = 'To-do';
+            statusLabel = 'To-Do';
             break;
           case TaskStatus.inProgress:
             statusBgColor = AppColors.statusInProgressBg;

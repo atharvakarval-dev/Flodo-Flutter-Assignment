@@ -24,14 +24,12 @@ class TaskCardWidget extends StatelessWidget {
 
   Color get _leftAccentColor {
     switch (task.status) {
-      case TaskStatus.pending:
+      case TaskStatus.todo:
         return AppColors.statusTodo;
       case TaskStatus.inProgress:
         return AppColors.primary;
       case TaskStatus.done:
         return AppColors.statusDone;
-      case TaskStatus.blocked:
-        return AppColors.statusBlocked;
     }
   }
 
