@@ -94,9 +94,12 @@ final blockedTaskIdsProvider = Provider<Set<String>>((ref) {
   final tasksAsync = ref.watch(tasksNotifierProvider);
   return tasksAsync.when(
     data: (tasks) {
-      final doneIds = tasks.where((t) => t.status == TaskStatus.done).map((t) => t.id).toSet();
+      final activeBlockerIds = tasks
+          .where((t) => t.status != TaskStatus.done)
+          .map((t) => t.id)
+          .toSet();
       return tasks
-          .where((t) => t.blockedById != null && !doneIds.contains(t.blockedById))
+          .where((t) => t.blockedById != null && activeBlockerIds.contains(t.blockedById))
           .map((t) => t.id)
           .toSet();
     },

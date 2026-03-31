@@ -8,6 +8,7 @@ import '../providers/task_providers.dart';
 import '../widgets/blurred_background.dart';
 import '../widgets/custom_bottom_nav.dart';
 import '../widgets/highlighted_text_widget.dart';
+import 'home_screen.dart';
 import 'task_form_screen.dart';
 
 class TaskListScreen extends ConsumerStatefulWidget {
@@ -91,7 +92,9 @@ class _TaskListScreenState extends ConsumerState<TaskListScreen> {
         children: [
           IconButton(
             icon: const Icon(Icons.arrow_back_rounded, color: AppColors.textPrimary),
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (_) => const HomeScreen()),
+            ),
           ),
           const Text(
             'Today\'s Tasks',
@@ -185,6 +188,87 @@ class _TaskListScreenState extends ConsumerState<TaskListScreen> {
     );
   }
 
+  void _confirmDelete(BuildContext context, TaskEntity task) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (_) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 36, height: 4,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFE0E0E0),
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              const SizedBox(height: 20),
+              const Icon(Icons.delete_outline_rounded,
+                  color: AppColors.error, size: 40),
+              const SizedBox(height: 12),
+              const Text('Delete Task',
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textPrimary)),
+              const SizedBox(height: 6),
+              Text(
+                '"${task.title}" will be permanently deleted.',
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                    fontSize: 13, color: AppColors.textSecondary),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () => Navigator.pop(context),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppColors.textSecondary,
+                        side: const BorderSide(color: Color(0xFFE0E0E0)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12)),
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                      ),
+                      child: const Text('Cancel'),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        ref
+                            .read(tasksNotifierProvider.notifier)
+                            .deleteTask(task.id);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.error,
+                        disabledBackgroundColor: AppColors.error,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12)),
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                      ),
+                      child: const Text('Delete'),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildTaskTimelineItem({
     required BuildContext context,
     required TaskEntity task,
@@ -218,8 +302,26 @@ class _TaskListScreenState extends ConsumerState<TaskListScreen> {
 
     return Opacity(
       opacity: isBlocked ? 0.45 : 1.0,
-      child: IntrinsicHeight(
-        child: Row(
+      child: Dismissible(
+        key: ValueKey(task.id),
+        direction: DismissDirection.endToStart,
+        background: Container(
+          margin: const EdgeInsets.only(bottom: 20),
+          decoration: BoxDecoration(
+            color: AppColors.error,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          alignment: Alignment.centerRight,
+          padding: const EdgeInsets.only(right: 20),
+          child: const Icon(Icons.delete_outline_rounded,
+              color: Colors.white, size: 24),
+        ),
+        confirmDismiss: (_) async {
+          _confirmDelete(context, task);
+          return false;
+        },
+        child: IntrinsicHeight(
+          child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // Time column
@@ -341,6 +443,31 @@ class _TaskListScreenState extends ConsumerState<TaskListScreen> {
                             const Icon(Icons.lock_rounded,
                                 size: 14, color: AppColors.statusBlocked),
                           ],
+                          // Three-dot delete menu
+                          PopupMenuButton<String>(
+                            onSelected: (_) => _confirmDelete(context, task),
+                            itemBuilder: (_) => [
+                              PopupMenuItem(
+                                value: 'delete',
+                                child: Row(
+                                  children: [
+                                    const Icon(Icons.delete_outline_rounded,
+                                        size: 16, color: AppColors.error),
+                                    const SizedBox(width: 8),
+                                    const Text('Delete',
+                                        style: TextStyle(
+                                            color: AppColors.error,
+                                            fontSize: 14)),
+                                  ],
+                                ),
+                              ),
+                            ],
+                            icon: const Icon(Icons.more_horiz,
+                                color: AppColors.textSecondary, size: 18),
+                            padding: EdgeInsets.zero,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12)),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 12),
@@ -382,6 +509,7 @@ class _TaskListScreenState extends ConsumerState<TaskListScreen> {
               ),
             ),
           ],
+        ),
         ),
       ),
     );

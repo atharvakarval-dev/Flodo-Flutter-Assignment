@@ -108,7 +108,6 @@ class AddProjectFAB extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (_) => const TaskFormScreen(),
-              fullscreenDialog: true,
             ),
           );
         },
