@@ -3,48 +3,53 @@ import 'package:flutter/material.dart';
 class AppColors {
   AppColors._();
 
-  static const Color primary = Color(0xFF5B6AF8);
-  static const Color primaryLight = Color(0xFFEEF0FF);
-  static const Color primaryDark = Color(0xFF3A4BD4);
+  // Core
+  static const Color primary = Color(0xFF5F27FF); 
+  static const Color primaryBase = Color(0xFF5F33E1);
+  static const Color background = Color(0xFFFAFAFA);
+  static const Color surface = Color(0xFFEFF0F7);
+  
+  // Text
+  static const Color textPrimary = Color(0xFF24252C);
+  static const Color textSecondary = Color(0xFF6E7191);
+  static const Color textTertiary = Color(0xFFCCCCCC);
+  static const Color textWhite = Color(0xFFFFFFFF);
 
-  static const Color background = Color(0xFFF7F8FC);
-  static const Color surface = Color(0xFFFFFFFF);
-  static const Color surfaceVariant = Color(0xFFF0F1F5);
+  // Status Colors (from mockup)
+  static const Color statusTodoText = Color(0xFF0087FF);
+  static const Color statusTodoBg = Color(0xFFE3F2FF);
+  
+  static const Color statusInProgressText = Color(0xFFFF7D53);
+  static const Color statusInProgressBg = Color(0xFFFFE9E1);
+  
+  static const Color statusDoneText = Color(0xFF34C759);
+  static const Color statusDoneBg = Color(0xFFE6F8EA);
 
-  static const Color textPrimary = Color(0xFF0D0E1A);
-  static const Color textSecondary = Color(0xFF6B7280);
-  static const Color textTertiary = Color(0xFFADB5BD);
-  static const Color textDisabled = Color(0xFFCBD5E1);
+  // Category Icon Colors (Background and Foreground)
+  static const Color catWorkBg = Color(0xFFFFE4F2);
+  static const Color catWorkIcon = Color(0xFFF478B8);
+  
+  static const Color catPersonalBg = Color(0xFFEDE4FF);
+  static const Color catPersonalIcon = Color(0xFF9260F4);
+  
+  static const Color catStudyBg = Color(0xFFFFE6D5);
+  static const Color catStudyIcon = Color(0xFFFF9142);
+  
+  static const Color catOtherBg = Color(0xFFFFF6D5);
+  static const Color catOtherIcon = Color(0xFFFFD12E);
 
-  static const Color border = Color(0xFFE8ECF0);
-  static const Color divider = Color(0xFFF0F2F5);
+  // Card Backgrounds
+  static const Color cardBlue = Color(0xFFE7F4FF);
+  static const Color cardPeach = Color(0xFFFFE9E1);
+  static const Color cardPurple = Color(0xFFEEE9FF);
+  
+  // Custom Accents
+  static const Color accentYellow = Color(0xFFF6E31A);
+  static const Color accentSecondary = Color(0xFF6E6A7C);
+  
+  // Time/Timeline
+  static const Color timelinePurple = Color(0xFFAB94FF);
 
-  static const Color statusTodo = Color(0xFF6B7280);
-  static const Color statusTodoBackground = Color(0xFFF3F4F6);
-  static const Color statusInProgress = Color(0xFF5B6AF8);
-  static const Color statusInProgressBackground = Color(0xFFEEF0FF);
-  static const Color statusDone = Color(0xFF10B981);
-  static const Color statusDoneBackground = Color(0xFFECFDF5);
-  static const Color statusBlocked = Color(0xFFEF4444);
-  static const Color statusBlockedBackground = Color(0xFFFEF2F2);
-
-  static const Color priorityLow = Color(0xFF10B981);
-  static const Color priorityLowBackground = Color(0xFFECFDF5);
-  static const Color priorityMedium = Color(0xFFF59E0B);
-  static const Color priorityMediumBackground = Color(0xFFFFFBEB);
-  static const Color priorityHigh = Color(0xFFEF4444);
-  static const Color priorityHighBackground = Color(0xFFFEF2F2);
-
-  static const Color success = Color(0xFF10B981);
-  static const Color warning = Color(0xFFF59E0B);
-  static const Color error = Color(0xFFEF4444);
-  static const Color info = Color(0xFF3B82F6);
-
-  static const Color searchHighlight = Color(0xFFFEF9C3);
-  static const Color searchHighlightText = Color(0xFF854D0E);
-
-  static const Color shimmer = Color(0xFFE8ECF0);
-  static const Color shimmerHighlight = Color(0xFFF7F8FC);
-
-  static Color blockedOverlay = Colors.white.withOpacity(0.5);
+  // Borders & Dividers
+  static const Color border = Color(0xFFEFF0F7);
 }

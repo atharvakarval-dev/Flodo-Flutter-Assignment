@@ -10,10 +10,9 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       colorScheme: ColorScheme.fromSeed(
-        seedColor: AppColors.primary,
+        seedColor: AppColors.primaryBase,
         primary: AppColors.primary,
         surface: AppColors.surface,
-        error: AppColors.error,
         brightness: Brightness.light,
       ),
       scaffoldBackgroundColor: AppColors.background,
@@ -21,102 +20,111 @@ class AppTheme {
         backgroundColor: AppColors.background,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
-        scrolledUnderElevation: 0.5,
-        shadowColor: AppColors.border,
-        titleTextStyle: GoogleFonts.inter(
-          fontSize: 17,
-          fontWeight: FontWeight.w700,
+        scrolledUnderElevation: 0,
+        shadowColor: Colors.transparent,
+        titleTextStyle: GoogleFonts.lexendDeca(
+          fontSize: 19,
+          fontWeight: FontWeight.w600,
           color: AppColors.textPrimary,
-          letterSpacing: -0.3,
         ),
         iconTheme: const IconThemeData(color: AppColors.textPrimary),
       ),
-      textTheme: GoogleFonts.interTextTheme().copyWith(
-        displayLarge: GoogleFonts.inter(
-          fontSize: 32,
-          fontWeight: FontWeight.w800,
-          color: AppColors.textPrimary,
-          letterSpacing: -1,
-        ),
-        displayMedium: GoogleFonts.inter(
-          fontSize: 28,
+      textTheme: GoogleFonts.lexendDecaTextTheme().copyWith(
+        displayLarge: GoogleFonts.lexendDeca(
+          fontSize: 44,
           fontWeight: FontWeight.w700,
           color: AppColors.textPrimary,
-          letterSpacing: -0.5,
         ),
-        headlineLarge: GoogleFonts.inter(
+        headlineLarge: GoogleFonts.lexendDeca(
+          fontSize: 33,
+          fontWeight: FontWeight.w700,
+          color: AppColors.textPrimary,
+        ),
+        titleLarge: GoogleFonts.lexendDeca(
           fontSize: 24,
           fontWeight: FontWeight.w700,
           color: AppColors.textPrimary,
-          letterSpacing: -0.3,
         ),
-        headlineMedium: GoogleFonts.inter(
-          fontSize: 20,
+        titleMedium: GoogleFonts.lexendDeca(
+          fontSize: 19,
           fontWeight: FontWeight.w700,
           color: AppColors.textPrimary,
         ),
-        titleLarge: GoogleFonts.inter(
-          fontSize: 17,
-          fontWeight: FontWeight.w600,
-          color: AppColors.textPrimary,
-        ),
-        titleMedium: GoogleFonts.inter(
-          fontSize: 15,
-          fontWeight: FontWeight.w600,
-          color: AppColors.textPrimary,
-        ),
-        bodyLarge: GoogleFonts.inter(
-          fontSize: 16,
+        bodyLarge: GoogleFonts.manrope(
+          fontSize: 14,
           fontWeight: FontWeight.w400,
           color: AppColors.textPrimary,
-          height: 1.6,
         ),
-        bodyMedium: GoogleFonts.inter(
+        bodyMedium: GoogleFonts.manrope(
           fontSize: 14,
           fontWeight: FontWeight.w400,
           color: AppColors.textSecondary,
-          height: 1.5,
         ),
-        bodySmall: GoogleFonts.inter(
-          fontSize: 12,
+        bodySmall: GoogleFonts.manrope(
+          fontSize: 11,
           fontWeight: FontWeight.w400,
-          color: AppColors.textTertiary,
+          color: AppColors.textSecondary,
+        ),
+        labelLarge: GoogleFonts.manrope(
+          fontSize: 13,
+          fontWeight: FontWeight.w700,
+          color: AppColors.textPrimary,
+        ),
+        labelSmall: GoogleFonts.manrope(
+          fontSize: 9,
+          fontWeight: FontWeight.w700,
+          color: AppColors.textPrimary,
         ),
       ),
       cardTheme: CardThemeData(
         color: AppColors.surface,
         elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppSpacing.radiusLg),
-          side: const BorderSide(color: AppColors.border),
+          borderRadius: BorderRadius.circular(10), 
         ),
+        margin: EdgeInsets.zero,
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: AppColors.surfaceVariant,
+        fillColor: AppColors.surface,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
-          borderSide: const BorderSide(color: AppColors.border),
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide.none,
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
-          borderSide: const BorderSide(color: AppColors.border),
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide.none,
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
+          borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
         ),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: AppSpacing.base,
           vertical: AppSpacing.md,
         ),
-        labelStyle: GoogleFonts.inter(
-          fontSize: 13,
+        labelStyle: GoogleFonts.manrope(
+          fontSize: 14,
           color: AppColors.textSecondary,
         ),
-        hintStyle: GoogleFonts.inter(
+        hintStyle: GoogleFonts.manrope(
           fontSize: 14,
           color: AppColors.textTertiary,
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primary,
+          foregroundColor: Colors.white,
+          elevation: 0,
+          padding: const EdgeInsets.symmetric(vertical: 14),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(9), // from CSS "Rectangle 1037" radius: 9
+          ),
+          textStyle: GoogleFonts.lexendDeca(
+            fontSize: 19,
+            fontWeight: FontWeight.w400, // from CSS button "Lexend Deca/Regular/19px"
+          ),
         ),
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
@@ -124,22 +132,11 @@ class AppTheme {
         foregroundColor: Colors.white,
         elevation: 4,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppSpacing.radiusFull),
-        ),
-      ),
-      snackBarTheme: SnackBarThemeData(
-        behavior: SnackBarBehavior.floating,
-        backgroundColor: AppColors.textPrimary,
-        contentTextStyle: GoogleFonts.inter(
-          color: Colors.white,
-          fontSize: 14,
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
+          borderRadius: BorderRadius.circular(10), // Matching the new 10px rounded system
         ),
       ),
       dividerTheme: const DividerThemeData(
-        color: AppColors.divider,
+        color: AppColors.border,
         thickness: 1,
         space: 1,
       ),
